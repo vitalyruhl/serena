@@ -26,9 +26,15 @@ class QuickScriptLanguageServer(SolidLanguageServer):
 
     class DependencyProvider(LanguageServerDependencyProviderSinglePath):
         def _get_or_install_core_dependency(self) -> str:
+            configured_path = self._custom_settings.get("ls_path")
+            environment_path = os.environ.get("INTOUCH_LANGUAGE_SERVER_PATH")
+            core_path = configured_path or environment_path
+            if isinstance(core_path, str) and core_path:
+                return core_path
             raise FileNotFoundError(
                 "The intouch-language QuickScript server is not bundled with Serena. "
-                "Set ls_specific_settings.quickscript.ls_path to its dist/server.js entry point."
+                "Set ls_specific_settings.quickscript.ls_path or "
+                "INTOUCH_LANGUAGE_SERVER_PATH to its dist/server.js entry point."
             )
 
         def _create_launch_command(self, core_path: str) -> list[str]:
