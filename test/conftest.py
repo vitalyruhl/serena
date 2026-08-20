@@ -299,6 +299,7 @@ _LANGUAGE_PYTEST_MARKERS: dict[LanguageServerId, list[MarkDecorator | Mark]] = {
     LanguageServerId.PHP_PHPACTOR: [pytest.mark.php],
     LanguageServerId.PHP_PHPANTOM: [pytest.mark.php],
     LanguageServerId.POWERSHELL: [pytest.mark.powershell],
+    LanguageServerId.QUICKSCRIPT: [pytest.mark.quickscript],
     LanguageServerId.PYTHON: [pytest.mark.python],
     LanguageServerId.PYTHON_JEDI: [pytest.mark.python],
     LanguageServerId.PYTHON_TY: [pytest.mark.python],

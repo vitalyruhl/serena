@@ -95,6 +95,17 @@ Some languages require additional installations or setup steps, as noted.
   note: reference search is not supported by this language server)
 * **HTML**
   (experimental; requires Node.js + npm)
+* **InTouch QuickScript**
+  Language `quickscript` supports `.vbi` and `.vi` through the external native
+  `intouch-language` server and requires Node.js. Configure a trusted project's `project.yml` with:
+
+  ```yaml
+  language_servers:
+    - quickscript
+  ls_specific_settings:
+    quickscript:
+      ls_path: /path/to/intouch-language/dist/server.js
+  ```
 * **Java**  
 * **JavaScript**  
   (supported via the TypeScript language server, i.e. use language `typescript` for both JavaScript and TypeScript)

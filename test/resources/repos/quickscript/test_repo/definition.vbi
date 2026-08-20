@@ -1,0 +1,5 @@
+{>
+@ScriptType QuickFunction
+@Name SerenaTestFunction
+@Description Serena integration smoke test.
+{<}

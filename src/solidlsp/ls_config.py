@@ -310,6 +310,11 @@ class LanguageServerId(str, Enum):
     experimental and must be explicitly specified via ``languages: [deno]`` in project.yml;
     do not also enable typescript for the same files. Requires the ``deno`` CLI on PATH.
     """
+    QUICKSCRIPT = "quickscript"
+    """InTouch QuickScript language server.
+    Supports ``.vbi`` and ``.vi`` files through the native intouch-language LSP.
+    Configure the server entry point with ``ls_specific_settings.quickscript.ls_path``.
+    """
 
     @classmethod
     def iter_all(cls, include_experimental: bool = True, include_non_programming_languages: bool = True) -> Iterable[Self]:
@@ -629,6 +634,8 @@ class LanguageServerId(str, Enum):
                         for base_pattern in ["ts", "js"]:
                             path_patterns.append(f".{prefix}{base_pattern}{postfix}")
                 return FilenameMatcher(*path_patterns)
+            case self.QUICKSCRIPT:
+                return FilenameMatcher(".vbi", ".vi", case_sensitive=False)
             case _:
                 raise ValueError(f"Unhandled language: {self}")
 
@@ -928,6 +935,10 @@ class LanguageServerId(str, Enum):
                 from solidlsp.language_servers.deno_language_server import DenoLanguageServer
 
                 return DenoLanguageServer
+            case self.QUICKSCRIPT:
+                from solidlsp.language_servers.quickscript_language_server import QuickScriptLanguageServer
+
+                return QuickScriptLanguageServer
             case _:
                 raise ValueError(f"Unhandled language: {self}")
 

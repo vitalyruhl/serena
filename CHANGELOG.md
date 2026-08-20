@@ -2,6 +2,10 @@
 
 Status of the `main` branch. Changes prior to the next official version change will appear here.
 
+* Language Servers:
+  - Add InTouch QuickScript support (language `quickscript`) for `.vbi` and `.vi` files through an
+    externally configured native `intouch-language` server entry point.
+
 # v1.7.0 (2026-08-09)
 
 * General:
