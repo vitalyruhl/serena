@@ -37,7 +37,7 @@ class SolidLSPSettings:
     For instance, if this is "/home/user/myproject/.solidlsp",
     then Solid-LSP will store project-specific data (e.g. caches) in that directory.
     """
-    ls_specific_settings: dict["LanguageServerIdLike", dict[str, Any]] = field(default_factory=dict)
+    ls_specific_settings: dict["LanguageServerIdLike | str", dict[str, Any]] = field(default_factory=dict)
     """
     Advanced configuration option allowing to configure language server implementation specific options.
     Have a look at the docstring of the constructors of the corresponding LS implementations within solidlsp to see which options are available.
@@ -78,9 +78,15 @@ class SolidLSPSettings:
 
     def get_ls_specific_settings(self, ls_id: "LanguageServerIdLike") -> CustomLSSettings:
         """
-        Gets the custom settings for the given language server
+        Gets custom settings for the given language server identifier.
+
+        Both identifier objects and their string keys are accepted. An exact identifier-keyed
+        mapping takes precedence over the string-keyed fallback, including when it is empty.
 
         :param ls_id: the language server identifier for which to retrieve settings
         :return: a dictionary of settings for the language server
         """
-        return self.CustomLSSettings(self.ls_specific_settings.get(ls_id))
+        settings = self.ls_specific_settings.get(ls_id)
+        if settings is None:
+            settings = self.ls_specific_settings.get(ls_id.get_key())
+        return self.CustomLSSettings(settings)
